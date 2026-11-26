@@ -1,0 +1,44 @@
+[package]
+autotests = false
+name = "craft-media"
+description = "Bit-level I/O, clean-room ISO BMFF (MP4), QuickTime (MOV) and Matroska (MKV, WebM) and MXF demuxers and muxers, an MPEG-TS/PS demuxer and MPEG-TS muxer, and Ogg and AVI demuxers."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+
+[lints]
+workspace = true
+
+[features]
+default = ["isobmff"]
+bitstream = []
+isobmff = ["bitstream", "dep:thiserror"]
+matroska = []
+# AVI (RIFF) and OpenDML demuxer and muxer (`craft_media::avi`).
+avi = []
+# MXF demuxer and writer (`craft_media::mxf`); the writer formats dates with chrono.
+mxf = ["dep:chrono"]
+# MPEG-2 Systems demuxer: transport streams and program streams (`craft_media::mpegts`), and the
+# transport stream writer (`craft_media::mpegts::mux`).
+mpegts = []
+# Sierra VMD (Video and Music Data) demuxer (`craft_media::vmd`).
+vmd = []
+# Ogg demuxer (Ogg Opus and Vorbis mapping, `craft_media::ogg`).
+ogg = []
+# Serialize and Deserialize for `Container`, `CodecId`, `CodecParams` and `PcmFormat`.
+serde = ["dep:serde"]
+
+[dependencies]
+thiserror = { workspace = true, optional = true }
+serde = { workspace = true, optional = true }
+chrono = { workspace = true, optional = true }
+
+[dev-dependencies]
+craft-media-testkit = { workspace = true }
+proptest = { workspace = true }
+serde_json = { workspace = true }
